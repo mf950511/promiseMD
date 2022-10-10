@@ -210,11 +210,3 @@ setTimeout(() => {
   })
 }, 1000)
 
-// const b = new Promise((res) => {
-//   console.log(111, 234)
-//   res(123)
-// })
-
-// b.then(() => {
-//   console.log(111, 123)
-// })
