@@ -102,7 +102,7 @@ then(thenCb, catchCb) {
   this._runCallbacks()
 }
 
-// test code MD_1
+// Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_1.js
 ```
 
 - With chaining
@@ -176,7 +176,8 @@ then(thenCb, catchCb) {
     this._state = STATE.REJECTED
     this._runCallbacks()
   }
-  // test code MD_2
+
+  //Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_2.js
 ```
 
 - Asynchronous
@@ -217,7 +218,7 @@ then(thenCb, catchCb) {
       this._runCallbacks()
     })
   }
-  // test code MD_3
+  //Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_3.js
 ```
 
 ## catch
@@ -338,7 +339,7 @@ then(thenCb, catchCb) {
       })
     }
   })
-  // complete code MD
+  // https://github.com/mf950511/promiseMD/blob/main/MyPromise.js
 ```
 
 ## generator, iterator, async, await
@@ -392,9 +393,7 @@ var it = main()
 it.next()
 ```
 
-
-- async
-- await
+- Async and await
 
 ```js
 function fetchData() {
