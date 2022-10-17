@@ -1,15 +1,31 @@
+---
+marp: true
+---
+
 # Implement My Own Promise 
+
+---
 
 ## What is the Promise?
 
 - Promise [Promise A+](https://promisesaplus.com/#point-8) 
 - Thenable
+- State
+
+```js
+const STATE = {
+  FULFILLED: 'fulfilled',
+  REJECTED: 'rejected',
+  PENDING: 'pending'
+}
+```
+
 - Value
 - Exception and reason
 
-## Constructor
+---
 
-- Parameters
+## Constructor
 
 ```js
 class MyPromise {
@@ -22,19 +38,14 @@ class MyPromise {
   }
 }
 ```
+---
 
 ## onSuccess and onFail
 
-- State
-- Value
-
 ```js
-const STATE = {
-  FULFILLED: 'fulfilled',
-  REJECTED: 'rejected',
-  PENDING: 'pending'
-}
 // ...Code
+_state = STATE.PENDING
+_value
 _onSuccess = (value) => {
   if(this._state !== STATE.PENDING) {
     return 
@@ -52,13 +63,25 @@ _onFail = (value) => {
   this._value = value
   this._state = STATE.REJECTED
 }
-```
 
+```
+---
 ## then
 
 - Callbacks
 
+---
+
 ```js
+// ...Code
+_thenCbs = []
+_catchCbs = []
+then(thenCb, catchCb) {
+  this._thenCbs.push(thenCb)
+  this._catchCbs.push(catchCb)
+  this._runCallbacks()
+}
+
 _onSuccess = (value) => {
   // ...Code
   this._runCallbacks()
@@ -95,18 +118,16 @@ _runCallbacks() {
     this._catchCbs = []
   }
 }
-
-then(thenCb, catchCb) {
-  this._thenCbs.push(thenCb)
-  this._catchCbs.push(catchCb)
-  this._runCallbacks()
-}
-
 // Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_1.js
 ```
 
+---
 - With chaining
 - Catch errors
+- The errors can be caught by which 'catch' block?
+- Can we resolve an error?
+
+--- 
 
 ```js
 then(thenCb, catchCb) {
@@ -142,9 +163,15 @@ then(thenCb, catchCb) {
     this._runCallbacks()
   })
 }
+
+// 
 ```
 
+---
+
 - Value(reason) is a Promise.
+
+---
 
 ```js
   _onSuccess = (value) => {
@@ -179,10 +206,13 @@ then(thenCb, catchCb) {
 
   //Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_2.js
 ```
+---
 
 - Asynchronous
+- Microtask and macrotask
 - Event loop and message queue
-- SetState
+
+--- 
 
 ```js
   _onSuccess = (value) => {
@@ -221,6 +251,8 @@ then(thenCb, catchCb) {
   //Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_3.js
 ```
 
+---
+
 ## catch
 
 ```js
@@ -228,6 +260,8 @@ then(thenCb, catchCb) {
     return this.then(undefined, cb)
   }
 ```
+
+---
 
 ## finally
 
@@ -243,6 +277,8 @@ then(thenCb, catchCb) {
   }
 ```
 
+---
+
 ## static resolve
 
 ```js
@@ -253,6 +289,8 @@ then(thenCb, catchCb) {
   }
 ```
 
+---
+
 ## static reject
 
 ```js
@@ -262,7 +300,7 @@ then(thenCb, catchCb) {
     })
   }
 ```
-
+---
 ## static all
 
 ```js
@@ -283,7 +321,7 @@ then(thenCb, catchCb) {
     })
   }
 ```
-
+---
 ## static allSettled
 
 ```js
@@ -309,7 +347,7 @@ then(thenCb, catchCb) {
     })
   }
 ```
-
+---
 ## static race
 
 ```js
@@ -321,7 +359,7 @@ then(thenCb, catchCb) {
     })
   }
 ```
-
+---
 ## static any
 
 ```js
@@ -341,12 +379,9 @@ then(thenCb, catchCb) {
   })
   // https://github.com/mf950511/promiseMD/blob/main/MyPromise.js
 ```
-
-## generator, iterator, async, await
-
-- Iterator
-- Generator
-
+---
+## Generator, iterator
+---
 ```js
 const obj = {a: 1, b: 2, c:3}
 const arr = [1,2,3]
@@ -357,24 +392,43 @@ for(let val of obj) {
 for(let val of arr) {
   console.log(val)
 }
-
-function* testGenerator() {
+```
+---
+```js
+function* testGenerator1() {
   yield 1
   yield 2
-  return 3
+  yield 3
 }
-const generator = testGenerator()
-generator.next()
-generator.next()
-generator.next()
+const generator1 = testGenerator1()
+for(let val of generator1) {
+  console.log(val)
+}
 ```
+---
+```js
+function* testGenerator(x) {
+  var a = yield x + 6
+  console.log(a)
+  var b = yield a + 7
+  console.log(b)
+  return a + b + 8
+}
+const generator = testGenerator(1)
+generator.next()
+generator.next(3)
+generator.next(11)
 
+```
+---
 - asynchronous
+---
 
 ```js
 function fetchData() {
   setTimeout(() => {
     it.next(300) // it.throw(300)
+    // throw new Error('new test')
   }, 1000)
 }
 
@@ -392,8 +446,9 @@ function *main() {
 var it = main()
 it.next()
 ```
-
-- Async and await
+---
+## Async and await
+---
 
 ```js
 function fetchData() {
@@ -417,9 +472,7 @@ function asyncMockWrapper(iterator) {
       if(done) {
         return resolve(value)
       } else {
-        value.then(res => {
-          step(res)
-        })
+        value.then(step)
       }
     }
     step()
@@ -439,6 +492,7 @@ function *main() {
 
 asyncMockWrapper(main())
 ```
+---
 ```js
 function fetchData() {
   return new Promise((res) => {
@@ -461,3 +515,11 @@ async function main() {
 
 main()
 ```
+---
+## Summary
+
+- Promise errors handling
+- Micro task and macro task
+- Generator and promise
+---
+## Q & A
