@@ -74,8 +74,8 @@ p.then((res) => {
   console.log(1, res)
 })
 
-setTimeout(() => {
-  p.then((res) => {
-    console.log(2, res)
-  })
-}, 40)
+// setTimeout(() => {
+//   p.then((res) => {
+//     console.log(2, res)
+//   })
+// }, 40)

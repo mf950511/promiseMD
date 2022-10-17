@@ -98,27 +98,27 @@ class MyPromise {
   }
 }
 
-// const p = new MyPromise((res, rej) => {
-//   setTimeout(() => {
-//     res('success')
-//   }, 20)
-// })
-
-// p.then(res => {
-//   console.log(1, res)
-//   return new MyPromise((resolve) => {
-//     setTimeout(() => {
-//       resolve('new Promise')
-//     }, 1000)
-//   })
-// }).then(res => {
-//   console.log(2, res)
-// })
-
-const p1 = new MyPromise((res) => {
-  res('success')
+const p = new MyPromise((res, rej) => {
+  setTimeout(() => {
+    res('success')
+  }, 20)
 })
-p1.then((res) => {
+
+p.then(res => {
+  console.log(1, res)
+  return new MyPromise((resolve) => {
+    setTimeout(() => {
+      resolve('new Promise')
+    }, 1000)
+  })
+}).then(res => {
   console.log(2, res)
 })
-console.log(3)
+
+// const p1 = new MyPromise((res) => {
+//   res('success')
+// })
+// p1.then((res) => {
+//   console.log(2, res)
+// })
+// console.log(3)

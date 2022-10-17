@@ -66,9 +66,7 @@ _onFail = (value) => {
 
 ```
 ---
-## then
-
-- Callbacks
+## Then function
 
 ---
 
@@ -99,15 +97,7 @@ _runCallbacks() {
     })
 
     this._thenCbs = []
-    // const p = new MyPromise((resolve) => {
-    //   setTimeout(() => {
-    //     resolve('End')
-    //   }, 20)
-    // })
-    // p.then(...Code)
-    // setTimeout(() => {
-    //   p.then(...Code)
-    // }, 40)
+    // Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_1.js
   }
 
   if(this._state === STATE.REJECTED) {
@@ -118,17 +108,19 @@ _runCallbacks() {
     this._catchCbs = []
   }
 }
-// Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_1.js
 ```
 
 ---
-- With chaining
-- Catch errors
+
 - The errors can be caught by which 'catch' block?
 - Can we resolve an error?
 
 --- 
 
+- With chaining
+- Catch errors
+
+---
 ```js
 then(thenCb, catchCb) {
   // this._thenCbs.push(thenCb)
@@ -392,6 +384,8 @@ for(let val of obj) {
 for(let val of arr) {
   console.log(val)
 }
+console.log(obj[Symbol.iterator]) // obj is not iterable
+console.log(arr[Symbol.iterator]) // ƒ values() { [native code] }
 ```
 ---
 ```js
@@ -404,6 +398,7 @@ const generator1 = testGenerator1()
 for(let val of generator1) {
   console.log(val)
 }
+console.log(generator1[Symbol.iterator])
 ```
 ---
 ```js
@@ -519,7 +514,7 @@ main()
 ## Summary
 
 - Promise errors handling
-- Micro task and macro task
+- Microtask and macrotask
 - Generator and promise
 ---
 ## Q & A
