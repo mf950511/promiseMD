@@ -97,7 +97,21 @@ _runCallbacks() {
     })
 
     this._thenCbs = []
-    // Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_1.js
+    // const p = new MyPromise((res) => {
+    //   setTimeout(() => {
+    //     res('success')
+    //   }, 20)
+    // })
+
+    // p.then(res => {
+    //   console.log(1, res)
+    // })
+
+    // setTimeout(() => {
+    //   p.then(res => {
+    //     console.log(2, res)
+    //   })
+    // }, 40)
   }
 
   if(this._state === STATE.REJECTED) {
@@ -195,8 +209,16 @@ then(thenCb, catchCb) {
     this._state = STATE.REJECTED
     this._runCallbacks()
   }
-
-  //Code: https://github.com/mf950511/promiseMD/blob/main/MyPromiseMD_2.js
+  // const p = new MyPromise((res) => {
+  //   res(new MyPromise((res1) => {
+  //     setTimeout(() => {
+  //       res1('success')
+  //     }, 1000)
+  //   }))
+  // })
+  // p.then(res => {
+  //   console.log(1, res)
+  // })
 ```
 ---
 
@@ -386,6 +408,8 @@ for(let val of arr) {
 }
 console.log(obj[Symbol.iterator]) // obj is not iterable
 console.log(arr[Symbol.iterator]) // ƒ values() { [native code] }
+const it = arr[Symbol.iterator]()
+it.next()
 ```
 ---
 ```js
@@ -441,10 +465,10 @@ function *main() {
 var it = main()
 it.next()
 ```
----
-## Async and await
----
 
+---
+## Generator and promise
+---
 ```js
 function fetchData() {
   return new Promise((res) => {
@@ -488,6 +512,8 @@ function *main() {
 asyncMockWrapper(main())
 ```
 ---
+## Async and await
+---
 ```js
 function fetchData() {
   return new Promise((res) => {
@@ -513,7 +539,7 @@ main()
 ---
 ## Summary
 
-- Promise errors handling
+- Promise and errors handling
 - Microtask and macrotask
 - Generator and promise
 ---
